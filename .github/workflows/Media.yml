@@ -1,0 +1,53 @@
+# Visit https://github.com/lowlighter/metrics#-documentation for full reference
+name: Media
+on:
+  # Schedule daily updates
+  schedule: [{cron: "*/5 * * * *"}]
+  # (optional) Run workflow manually
+  workflow_dispatch:
+  # (optional) Run workflow when pushing on master/main
+  # push: {branches: ["master", "main"]}
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Recent
+        uses: lowlighter/metrics@latest
+        with:
+          filename: media.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          base: ""
+          base_indepth: yes
+          config_timezone: Asia/Taipei
+          committer_gist: ${{ secrets.GIST }}
+          output_action: gist
+          plugin_music: yes
+          plugin_music_limit: 10
+          plugin_music_mode: recent
+          plugin_music_played_at: yes
+          plugin_music_provider: spotify
+          plugin_music_time_range: short
+          plugin_music_top_type: tracks
+          plugin_music_token: "${{ secrets.SPID_TOKEN }},${{ secrets.SPSE_TOKEN }},${{ secrets.SPRE_TOKEN }}"
+          plugin_music_user: .user.login
+      - name: Top
+        uses: lowlighter/metrics@latest
+        with:
+          filename: top.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          base: ""
+          base_indepth: yes
+          config_timezone: Asia/Taipei
+          committer_gist: ${{ secrets.GIST }}
+          output_action: gist
+          plugin_music: yes
+          plugin_music_limit: 10
+          plugin_music_mode: top
+          plugin_music_played_at: yes
+          plugin_music_provider: spotify
+          plugin_music_time_range: short
+          plugin_music_top_type: tracks
+          plugin_music_token: "${{ secrets.SPID_TOKEN }},${{ secrets.SPSE_TOKEN }},${{ secrets.SPRE_TOKEN }}"
+          plugin_music_user: .user.login
